@@ -28,8 +28,6 @@ def create_user(user: User):
     try:
         # Convert email to lowercase
         user_email = user.email.lower()
-        # Hash password
-        hased_password = bcrypt.hashpw(user.password, bcrypt.gensalt())
 
         # Check if user already exists
         if user_exists(value=user_email):
@@ -37,7 +35,7 @@ def create_user(user: User):
 
         # Add user to users table
         user = supabase.from_("users")\
-            .insert({"name": user.name, "email": user_email, "password": hased_password})\
+            .insert({"name": user.name, "email": user_email})\
             .execute()
 
         # Check if user was added
